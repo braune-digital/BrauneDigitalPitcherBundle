@@ -24,9 +24,17 @@ class Client extends BaseClient {
 	 * @param $message
 	 * @param $satelliteName
 	 */
-	public function notify($level, $message, $satelliteName = '')
+	public function notify($level, $message, $satelliteName = '', $url = '', $secret = '', $apiVersion = '')
 	{
-		parent::notify($level, $message, $this->container->getParameter('braune_digital_pitcher.satellite_name'));
+		$config = $this->container->getParameter('braune_digital_pitcher');
+		parent::notify(
+			$level,
+			$message,
+			$config['satellite_name'],
+			$config['pitcher_url'],
+			$config['secret'],
+			$config['api_version']
+		);
 	}
 
 }
