@@ -27,7 +27,7 @@
     "MIT"
   ],
   "require" : {
-    "braune-digital/pitcher": "dev-master"
+    "braune-digital/pitcher": "1.0.x-dev"
   },
 
   "autoload": {
