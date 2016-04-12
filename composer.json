@@ -1,0 +1,38 @@
+{
+  "name": "braune-digital/pitcher-bundle",
+  "description": "Pitcher bundle",
+  "type": "symfony-bundle",
+  "authors": [
+    {
+      "name": "Braune Digital GmbH",
+      "email": "mail@braune-digital.com",
+      "homepage": "www.braune-digital.com",
+      "role": "Developer"
+    },
+    {
+      "name": "Patrick Rathje",
+      "email": "pr@braune-digital.com",
+      "role": "Developer"
+    },
+    {
+      "name": "Henrik Braune",
+      "email": "hb@braune-digital.com",
+      "role": "Developer"
+    }
+  ],
+  "keywords": [
+    "pitcher bundle watch health check notification exeption"
+  ],
+  "license": [
+    "MIT"
+  ],
+  "require" : {
+    "braune-digital/pitcher": "dev-master"
+  },
+
+  "autoload": {
+    "psr-4": {
+      "BrauneDigital\\PitcherBundle\\": ""
+    }
+  }
+}
