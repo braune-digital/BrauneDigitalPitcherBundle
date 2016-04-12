@@ -1,0 +1,8 @@
+monolog:
+    channels: ["pitcher"]
+    handlers:
+        pitcher:
+            level: error
+            type: rotating_file
+            path: "%kernel.logs_dir%/pitcher.log"
+            channels: [pitcher]

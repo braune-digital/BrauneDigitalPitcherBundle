@@ -1,0 +1,9 @@
+parameters:
+    braunedigital.pitcher.client.class: BrauneDigital\PitcherBundle\Client\Client
+
+services:
+    pitcher.client:
+        class:  "%braunedigital.pitcher.client.class%"
+        arguments: ["@service_container"]
+        calls:
+            - [setLogger, ['@monolog.logger.pitcher']]
