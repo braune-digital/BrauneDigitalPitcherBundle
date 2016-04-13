@@ -1,5 +1,7 @@
-![Pitcher logo](./Pitcher-Logo-Pos-Big.png?raw=true "Title")
 # BrauneDigitalPitcherBundle
+
+<img src="http://www.pitcher-app.com/images/Pitcher-Logo-Pos-Big.png" width="400">
+
 This bundle integrates the Pitcher component (https://github.com/braune-digital/BrauneDigitalPitcher) into the Symfony framework. It allows you to define parameters in your configuration and serves with a simple service for sending notifications to Pitcher.
 
 ## Installation
