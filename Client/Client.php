@@ -17,6 +17,8 @@ class Client extends BaseClient {
 	 */
 	public function __construct(ContainerInterface $container) {
 		$this->container = $container;
+		$config = $this->container->getParameter('braune_digital_pitcher');
+		parent::__construct($config['satellite_name'], $config['pitcher_url'], $config['secret'], $config['api_version']);
 	}
 
 	/**
@@ -24,16 +26,12 @@ class Client extends BaseClient {
 	 * @param $message
 	 * @param $satelliteName
 	 */
-	public function pitch($level, $message, $satelliteName = '', $url = '', $secret = '', $apiVersion = '')
+	public function pitch($level, $message)
 	{
 		$config = $this->container->getParameter('braune_digital_pitcher');
 		parent::pitch(
 			$level,
-			$message,
-			$config['satellite_name'],
-			$config['pitcher_url'],
-			$config['secret'],
-			$config['api_version']
+			$message
 		);
 	}
 

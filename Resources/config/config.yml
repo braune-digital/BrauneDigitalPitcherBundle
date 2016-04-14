@@ -10,4 +10,3 @@ monolog:
 braune_digital_pitcher:
     secret: "%braune_digital_pitcher.secret%"
     satellite_name: "%braune_digital_pitcher.satellite_name%"
-    pitcher_url: "%braune_digital_pitcher.pitcher_url%"

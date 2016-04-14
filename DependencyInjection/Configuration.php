@@ -24,7 +24,7 @@ class Configuration implements ConfigurationInterface
                 ->scalarNode('secret')->isRequired()->end()
                 ->scalarNode('satellite_name')->isRequired()->end()
                 ->scalarNode('pitcher_url')
-                    ->defaultValue('http://www.pitcher-app.io')
+                    ->defaultValue('http://api.pitcher-app.com/')
                 ->end()
                 ->scalarNode('api_version')
                     ->defaultValue('v1')
