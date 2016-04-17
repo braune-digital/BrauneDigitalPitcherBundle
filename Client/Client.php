@@ -18,7 +18,7 @@ class Client extends BaseClient {
 	public function __construct(ContainerInterface $container) {
 		$this->container = $container;
 		$config = $this->container->getParameter('braune_digital_pitcher');
-		parent::__construct($config['satellite_name'], $config['pitcher_url'], $config['secret'], $config['api_version']);
+		parent::__construct($config['satellite_name'], $config['secret'], $config['api_version'], $config['pitcher_url']);
 	}
 
 	/**
