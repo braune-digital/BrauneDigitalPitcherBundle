@@ -1,5 +1,6 @@
 parameters:
     braunedigital.pitcher.client.class: BrauneDigital\PitcherBundle\Client\Client
+    braunedigital.pitcher.exception_listener.class: BrauneDigital\PitcherBundle\EventSubscriber\ExceptionSubscriber
 
 services:
     pitcher.client:
@@ -7,3 +8,10 @@ services:
         arguments: ["@service_container"]
         calls:
             - [setLogger, ['@monolog.logger.pitcher']]
+
+    pitcher.exception_listener:
+        class: "%braunedigital.pitcher.exception_listener.class%"
+        tags:
+            - { name: kernel.event_subscriber }
+        calls:
+            - [setClient, ['@pitcher.client']]
