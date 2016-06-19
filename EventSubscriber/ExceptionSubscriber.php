@@ -27,14 +27,26 @@ class ExceptionSubscriber implements EventSubscriberInterface
 	{
 		return array(
 			KernelEvents::EXCEPTION => array(
-				array('kernel.exception', 10)
+				array('processException', 10),
+				array('logException', 0),
+				array('notifyException', -10)
 			)
 		);
 	}
 
-	public function kernelException(GetResponseForExceptionEvent $event)
+	public function processException(GetResponseForExceptionEvent $event)
 	{
 		$this->client->pitch(Notification::LEVEL_CRITICAL, 'Filemaker sync has error. (' . $event->getException()->getFile() . '[' . $event->getException()->getLine() . ']:' . $event->getException()->getMessage() . ')');
+	}
+
+	public function logException(GetResponseForExceptionEvent $event)
+	{
+
+	}
+
+	public function notifyException(GetResponseForExceptionEvent $event)
+	{
+
 	}
 
 }
