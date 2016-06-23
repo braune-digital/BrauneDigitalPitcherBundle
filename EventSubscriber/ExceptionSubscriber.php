@@ -36,7 +36,7 @@ class ExceptionSubscriber implements EventSubscriberInterface
 
 	public function processException(GetResponseForExceptionEvent $event)
 	{
-		$this->client->pitch(Notification::LEVEL_CRITICAL, 'Filemaker sync has error. (' . $event->getException()->getFile() . '[' . $event->getException()->getLine() . ']:' . $event->getException()->getMessage() . ')');
+		$this->client->pitch(Notification::LEVEL_CRITICAL, 'Pitcher exception subscriber (' . $event->getException()->getFile() . '[' . $event->getException()->getLine() . ']:' . $event->getException()->getMessage() . ')');
 	}
 
 	public function logException(GetResponseForExceptionEvent $event)
