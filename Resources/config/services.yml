@@ -15,3 +15,4 @@ services:
             - { name: kernel.event_subscriber }
         calls:
             - [setClient, ['@pitcher.client']]
+            - [setContainer, ['@service_container']]

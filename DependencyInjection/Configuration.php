@@ -29,6 +29,7 @@ class Configuration implements ConfigurationInterface
                 ->scalarNode('api_version')
                     ->defaultValue('v1')
                 ->end()
+                ->scalarNode('threshold')->defaultValue('critical')->end()
             ->end()
         ;
 
