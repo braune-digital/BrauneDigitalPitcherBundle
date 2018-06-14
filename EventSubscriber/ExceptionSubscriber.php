@@ -8,6 +8,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpKernel\Event\GetResponseForExceptionEvent;
 use Symfony\Component\HttpKernel\Exception\HttpExceptionInterface;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\HttpKernel\KernelEvents;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
 
@@ -49,12 +50,17 @@ class ExceptionSubscriber implements EventSubscriberInterface
 	{
 		$exception = $event->getException();
 		$config = $this->container->getParameter('braune_digital_pitcher');
+		// ToDo: This part should be configurable
 		if (
 			!$exception instanceof HttpExceptionInterface &&
-			!$exception instanceof AuthenticationException
+			!$exception instanceof AuthenticationException &&
+            !$exception instanceof NotFoundHttpException
 		) {
 			$this->client->pitch(Notification::LEVEL_CRITICAL, $this->getMessage($exception));
-		} else if ($exception instanceof HttpExceptionInterface && $exception->getStatusCode() >= $config['threshold']) {
+		} else if (
+		      ($exception instanceof HttpExceptionInterface || $exception instanceof NotFoundHttpException)
+            && $exception->getStatusCode() >= $config['threshold']
+        ) {
 			if ($exception->getStatusCode() >= 300 && $exception->getStatusCode() < 400) {
 				$this->client->pitch(Notification::LEVEL_INFO, $this->getMessage($exception));
 			} else if ($exception->getStatusCode() >= 400 && $exception->getStatusCode() < 500) {
