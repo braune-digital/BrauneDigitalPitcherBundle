@@ -4,6 +4,7 @@ namespace BrauneDigital\PitcherBundle\DependencyInjection;
 
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\Config\FileLocator;
+use Symfony\Component\DependencyInjection\Reference;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 use Symfony\Component\DependencyInjection\Loader;
 
@@ -25,5 +26,10 @@ class BrauneDigitalPitcherExtension extends Extension
 
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.yml');
+
+        $handlerDef = $container->getDefinition('pitcher.handler');
+        $factoryArgs = $handlerDef->getArguments();
+        $factoryArgs[0] = new Reference($config['handler']);
+        $handlerDef->setArguments($factoryArgs);
     }
 }

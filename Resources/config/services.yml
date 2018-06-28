@@ -1,6 +1,11 @@
 parameters:
     braunedigital.pitcher.client.class: BrauneDigital\PitcherBundle\Client\Client
     braunedigital.pitcher.exception_listener.class: BrauneDigital\PitcherBundle\EventSubscriber\ExceptionSubscriber
+    braunedigital.pitcher.handler.direct.class: BrauneDigital\PitcherBundle\Handler\DirectHandler
+    braunedigital.pitcher.handler.on_terminate.class: BrauneDigital\PitcherBundle\Handler\OnTerminateHandler
+    braunedigital.pitcher.handler.factory: 'BrauneDigital\PitcherBundle\Handler\HandlerFactory'
+    braunedigital.pitcher.filter_manager.class: 'BrauneDigital\PitcherBundle\Filter\FilterManager'
+    braunedigital.pitcher.filter.factory: 'BrauneDigital\PitcherBundle\Filter\FilterManager'
 
 services:
     pitcher.client:
@@ -11,8 +16,33 @@ services:
 
     pitcher.exception_listener:
         class: "%braunedigital.pitcher.exception_listener.class%"
+        calls:
+            - [setHandler, ['@pitcher.handler']]
         tags:
             - { name: kernel.event_subscriber }
-        calls:
-            - [setClient, ['@pitcher.client']]
-            - [setContainer, ['@service_container']]
+
+    pitcher.filter_manager:
+        class: "%braunedigital.pitcher.filter_manager.class%"
+
+    pitcher.filter.base:
+        class: 'BrauneDigital\PitcherBundle\Filter\ChainFilter'
+        factory:   ['%braunedigital.pitcher.filter.factory%', createBaseFilter]
+        arguments: [ '%braune_digital_pitcher%']
+        tags:
+            - {name: pitcher.filter, order: 0}
+
+    pitcher.handler.direct:
+        class: "%braunedigital.pitcher.handler.direct.class%"
+        arguments: ['@pitcher.client']
+
+    pitcher.handler.on_terminate:
+        class: "%braunedigital.pitcher.handler.on_terminate.class%"
+        arguments: ['@pitcher.handler.direct']
+        tags:
+            - { name: kernel.event_listener, event: kernel.terminate }
+
+    pitcher.handler:
+        class: 'BrauneDigital\PitcherBundle\Handler\FilteredHandler'
+        factory:   ['%braunedigital.pitcher.handler.factory%', createHandler]
+        arguments: [ ~ , '@pitcher.filter_manager']
+        public: true

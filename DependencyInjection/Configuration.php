@@ -2,8 +2,11 @@
 
 namespace BrauneDigital\PitcherBundle\DependencyInjection;
 
+use Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\Security\Core\Exception\AuthenticationException;
 
 /**
  * This is the class that validates and merges configuration from your app/config files.
@@ -29,11 +32,33 @@ class Configuration implements ConfigurationInterface
                 ->scalarNode('api_version')
                     ->defaultValue('v1')
                 ->end()
-                ->scalarNode('threshold')->defaultValue('critical')->end()
+                ->scalarNode('threshold')->defaultValue(500)->end()
             ->end()
         ;
 
 
+        $handlerMapping = [
+            'direct' => 'pitcher.handler.direct',
+            'on_terminate' => 'pitcher.handler.on_terminate',
+            'terminate' => 'pitcher.handler.on_terminate'
+        ];
+        $rootNode->children()->scalarNode('handler')->defaultValue('pitcher.handler.direct')
+            ->beforeNormalization()
+            ->ifInArray(array_keys($handlerMapping))
+            ->then(function ($v) use ($handlerMapping) {return $handlerMapping[$v];});
+
+        $this->addFiltersNode($rootNode);
         return $treeBuilder;
+    }
+
+
+    public function addFiltersNode(ArrayNodeDefinition $rootNode) {
+
+        $rootNode->
+                children()
+                    ->arrayNode('ignore_exceptions')->prototype('scalar')->end()->defaultValue([
+            AuthenticationException::class,
+            NotFoundHttpException::class
+        ]);
     }
 }
