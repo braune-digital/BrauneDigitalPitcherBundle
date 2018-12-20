@@ -6,6 +6,7 @@ monolog:
             type: rotating_file
             path: "%kernel.logs_dir%/pitcher.log"
             channels: [pitcher]
+            max_files: 31
 
 braune_digital_pitcher:
     secret: "%braune_digital_pitcher.secret%"
