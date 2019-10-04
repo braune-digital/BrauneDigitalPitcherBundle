@@ -55,7 +55,7 @@ parameters:
     braune_digital_pitcher.satellite_name: YOU_ARE_FREE_TO_CHOOSE_A_NAME // for example: Projekt1
 ```
 
-After that step you are ready to use the pitcher client.
+After that step you are ready to use the pitcher client. For testing your configuration you can use the pitcher:send_message command.
 
 
 ## Using the client service
